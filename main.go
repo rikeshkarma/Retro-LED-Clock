@@ -5,116 +5,12 @@ package main
 import (
 	"fmt"
 	"time"
+
+	placeholder "github.com/rikeshkarma/Retro-LED-Clock/components"
 )
 
 func main() {
-	// for keeping things easy to read and type-safe
-	type placeholder [5]string
-
-	// put the digits (placeholders) into variables
-	// using the placeholder array type above
-	zero := placeholder{
-		"███",
-		"█ █",
-		"█ █",
-		"█ █",
-		"███",
-	}
-
-	one := placeholder{
-		"██ ",
-		" █ ",
-		" █ ",
-		" █ ",
-		"███",
-	}
-
-	two := placeholder{
-		"███",
-		"  █",
-		"███",
-		"█  ",
-		"███",
-	}
-
-	three := placeholder{
-		"███",
-		"  █",
-		"███",
-		"  █",
-		"███",
-	}
-
-	four := placeholder{
-		"█ █",
-		"█ █",
-		"███",
-		"  █",
-		"  █",
-	}
-
-	five := placeholder{
-		"███",
-		"█  ",
-		"███",
-		"  █",
-		"███",
-	}
-
-	six := placeholder{
-		"███",
-		"█  ",
-		"███",
-		"█ █",
-		"███",
-	}
-
-	seven := placeholder{
-		"███",
-		"  █",
-		"  █",
-		"  █",
-		"  █",
-	}
-
-	eight := placeholder{
-		"███",
-		"█ █",
-		"███",
-		"█ █",
-		"███",
-	}
-
-	nine := placeholder{
-		"███",
-		"█ █",
-		"███",
-		"  █",
-		"███",
-	}
-
-	colon := placeholder{
-		"   ",
-		" ░ ",
-		"   ",
-		" ░ ",
-		"   ",
-	}
-
-	// This array's type is "like": [10][5]string
-	//
-	// However:
-	// + "placeholder" is not equal to [5]string in type-wise.
-	// + Because: "placeholder" is a defined type, which is different
-	//   from [5]string type.
-	// + [5]string is an unnamed type.
-	// + placeholder is a named type.
-	// + The underlying type of [5]string and placeholder is the same:
-	//     [5]string
-	digits := [...]placeholder{
-		zero, one, two, three, four, five, six, seven, eight, nine,
-	}
-
+	
 	//screen.Clear()
 	fmt.Print("\033[2J")
 
@@ -127,12 +23,12 @@ func main() {
 		hour, min, sec := now.Hour(), now.Minute(), now.Second()
 
 		// extract the digits: 17 becomes, 1 and 7 respectively
-		clock := [...]placeholder{
-			digits[hour/10], digits[hour%10],
-			colon,
-			digits[min/10], digits[min%10],
-			colon,
-			digits[sec/10], digits[sec%10],
+		clock := [...]placeholder.Placeholder{
+			placeholder.Digits[hour/10], placeholder.Digits[hour%10],
+			placeholder.Colon,
+			placeholder.Digits[min/10], placeholder.Digits[min%10],
+			placeholder.Colon,
+			placeholder.Digits[sec/10], placeholder.Digits[sec%10],
 		}
 
 		// Explanation: clock[0]
@@ -149,7 +45,7 @@ func main() {
 				// + On each sec divisible by two, prints an empty line
 				// + Otherwise: prints the current pixel
 				next := clock[index][line]
-				if digit == colon && sec%2 == 0 {
+				if digit == placeholder.Colon && sec%2 == 0 {
 					next = "   "
 				}
 				// Print the next line and,
